@@ -53,7 +53,7 @@ function getleginfo(stater){
   openstates.districtSearch(stater, function(err, json) {
  if (err) throw err;
  console.log(json);
- getbounds('ocd-division/country:us/state:ca/sldl:17')
+ getbounds('ocd-division/country:us/state:ca/sldl:19')
 
 });
 
