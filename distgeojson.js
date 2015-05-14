@@ -70,7 +70,7 @@ function getleginfo(stater){
  if (err) throw err;
  console.log('lenth of distsearch', json.length);
  upper = json.filter(function(d){
-   return d.chamber == 'upper'
+   return d.chamber == 'lower'
  })
 
  for(i in upper){
