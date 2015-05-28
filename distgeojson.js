@@ -1,3 +1,13 @@
+/* basically what's going on is:
+
+fill up the states array with metadata about all the states.
+
+In here we call a function stateDat([now one state]) and it doesn't really do anything but give you some meta data about the state I think
+
+
+
+
+*/
 var OpenStates = require('openstates');
 var apiKey = require('./api/sunkey.js')
 var openstates = new OpenStates(apiKey);
@@ -7,12 +17,18 @@ var geofeat = require('./sun2geojson.js');
 var fs = require('fs');
 
 var printit = false;
+
+// These are still not implemented.
+var gostate = "vt";
+var gohouse = "lower";
+
 var geojson =
     { "type":"FeatureCollection",
       "features":[
 
       ]
     }
+
 
 
 /* legDetail example
@@ -25,15 +41,17 @@ openstates.legDetail('NCL000173', function(err, json) {
 var states = [];
 //getleginfo('wi');
 
+// this is just getting a json array of states metatdata
 openstates.metadataOverview(function(err, json) {
   if (err) throw err;
   //console.log(json);
   states = json;
 
-  console.log(states[0]);
-  stateDat(states[38]);
+  console.log(states);
+//  stateDat(states[38]);
 
-  getleginfo(states[29].abbreviation)
+  // this is where it's actually getting a state and making a geojson thing based on the abbreviation
+  getleginfo(gostate, gohouse);
 
 
   json.forEach(function(d){
@@ -41,7 +59,6 @@ openstates.metadataOverview(function(err, json) {
     //stateDat(d);
   })
 });
-
 
 var feature = {};
 
@@ -62,26 +79,29 @@ function stateDat (d){
 
  }
 }
-var upper, lower;
 
-function getleginfo(stater){
+var upper, lower;
+var houser;
+
+function getleginfo(stater, cham){
   //console.log(stater)
   openstates.districtSearch(stater, function(err, json) {
  if (err) throw err;
  console.log('lenth of distsearch', json.length);
- upper = json.filter(function(d){
-   return d.chamber == 'lower'
+ houser = json.filter(function(d){
+   return d.chamber == cham;
  })
 
- for(i in upper){
+ for(i in houser){
   // console.log('in th eupps',upper[i])
-   if(i == upper.length -1){
+   if(i == houser.length -1){
      printit = true;
      console.log('doobie', i)
    }
+
    console.log('doobie', i)
 
-   getbounds(upper[i].boundary_id, printit)
+   getbounds(houser[i].boundary_id, printit)
 
  }
 // getbounds(json[1].boundary_id)
