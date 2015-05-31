@@ -19,7 +19,7 @@ var fs = require('fs');
 var printit = false;
 
 // These are still not implemented.
-var gostate = "vt";
+var gostate = "ny";
 var gohouse = "lower";
 
 var geojson =
