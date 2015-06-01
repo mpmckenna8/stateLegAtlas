@@ -19,8 +19,9 @@ var fs = require('fs');
 var printit = false;
 
 // These are still not implemented.
-var gostate = "ny";
-var gohouse = "lower";
+console.log(process.argv)
+var gostate = process.argv[2] || "ny";
+var gohouse = process.argv[3] || "upper";
 
 var geojson =
     { "type":"FeatureCollection",
@@ -75,7 +76,6 @@ function stateDat (d){
 //getleginfo(state, chambers[0]);
  for (i in chambers){
    console.log(i);
-
 
  }
 }
@@ -139,7 +139,9 @@ function getbounds(did, pri){
 }
 
 function makfi(bl){
-  fs.writeFile('border.json', bl,function(err){
+
+  var finame = gostate + gohouse + ".json";
+  fs.writeFile(finame, bl,function(err){
     console.log('should be a file of the border')
   })
 }

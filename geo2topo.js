@@ -41,19 +41,13 @@ console.log(tose.features[2].geometry.coordinates)
   bleep.features.push(tose.features[0]);
 //bleep.features.push(tose.features[2]);
 
-  var toppy = topojson.topology({colli:tose}, function(d){
-    console.log('in the topo callback')
-  })
+  var toppy = topojson.topology({colli:tose}, {"property-transform":function(object){return object.properties;}})
 
 
   for (i in tose.features){
     //console.log(i)
 
-
   }
-
-
-
 
  console.log(  //Object.key
  (toppy)

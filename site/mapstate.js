@@ -19,7 +19,7 @@ var svg = holder.append("svg")
 .style('border', '2px solid grey');
 
 
-d3.json('nyLow.topojson', function(err, d){
+d3.json('nyUpper.topojson', function(err, d){
   if (err){
     console.log("error, error data wasn't loaded:", err)
   }
@@ -59,10 +59,10 @@ d3.json('nyLow.topojson', function(err, d){
   svg.call(zoom)
 
 
-  features.selectAll(".casubun")
+  features.selectAll(".distos")
     .data(stageo.features)
     .enter().append("path")
-    .attr("class", function(d) { return "casubun"; })
+    .attr("class", function(d) { return "distos"; })
     .attr("d", path)
     .attr("fill",function(d,i){
       //console.log(d)
@@ -71,18 +71,65 @@ d3.json('nyLow.topojson', function(err, d){
 
 
 
+    d3.json("http://localhost:5000/db/?house=upper&state=ny", function(err, d){
+      if( err){
+        console.log("something went wrong getting the politicians", err);
+      }
+
+      console.log('data heresies', d)
+
+      d3.selectAll('.distos')
+.style('fill', function(geo){
+//  console.log(geo.properties)
+//  return 'orange'
+
+     d.forEach(function(q){
+      // console.log(q)
+        if(q.district === geo.properties.name){
+          console.log('matched one!')
+
+          geo.properties.party = q.party;
+          return d;
+
+          }
+        })
+
+        //console.log(geo)
+
+      if(geo.properties.party === "Republican"){
+        return "red";
+      }
+      else{
+        return "blue"
+      }
+
+  //want to call below passing in d after I gussy things up
+    //makePcol
+  })
+.attr('class', 'distos')
+.attr('stroke','null')
 
 
 
-
-
-
+    })
 
 
   //console.log(stageo)
 })
 
+function makePcol(d){
+  //  console.log('making colors', d)
+  if(d.properties.party == 'Democrat'){
+    return 'blue'
+  }
+  else if(d.properties.party == 'Republican'){
+    return 'red';
+  }
+  else{
+    return 'yellow'
+  }
 
+}
 
 function zoomed() {
   features.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
