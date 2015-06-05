@@ -7,6 +7,9 @@ var height = 600;
 
 var features;
 
+var dems = 0,
+repubs = 0;
+
 
 var holder = d3.select('.mapper')
 .style("width", width + "px").style("height", height+"px")
@@ -17,6 +20,30 @@ var svg = holder.append("svg")
 .attr("height", height)
 .style('background', 'black')
 .style('border', '2px solid grey');
+
+
+var polinfo = d3.select("body").append("div").attr("class", 'parhouse')
+    .style('height', "440px").style('width', '250px')
+    .style('background', 'grey')
+    .style('float', 'right');
+
+    polinfo.append('div')
+    .attr('class','tots')
+
+    .text('Totals:');
+
+
+
+    polinfo.append('div')
+    .html(
+    ' </br><div class = "dems"><span class="demtext"> </span> Democrats</div> <div class="repubs"><span class="reptext"></span> Republicans</div>');
+
+
+var polSquare = d3.select('.politsq')
+                .attr('height', '20px')
+                .attr('width', '20px')
+                .attr('background', 'orange')
+                .attr('class', 'politsq')
 
 
 d3.json('nyUpper.topojson', function(err, d){
@@ -78,51 +105,91 @@ d3.json('nyUpper.topojson', function(err, d){
 
       console.log('data heresies', d)
 
-      d3.selectAll('.distos')
-.style('fill', function(geo){
-//  console.log(geo.properties)
-//  return 'orange'
+            d3.selectAll('.distos')
+              .style('fill', function(geo){
+              //  console.log(geo.properties)
+              //  return 'orange'
 
-     d.forEach(function(q){
-      // console.log(q)
-        if(q.district === geo.properties.name){
-          console.log('matched one!')
+                   d.forEach(function(q){
+                    // console.log(q)
+                      if(q.district === geo.properties.name){
+                        console.log('matched one!')
 
-          geo.properties.party = q.party;
-          return d;
+                        geo.properties.party = q.party;
 
-          }
-        })
 
-        //console.log(geo)
+                        return d;
 
-      if(geo.properties.party === "Republican"){
-        return "red";
-      }
-      else{
-        return "blue"
-      }
+                        }
+                      })
 
-  //want to call below passing in d after I gussy things up
-    //makePcol
-  })
-.attr('class', 'distos')
-.attr('stroke','null')
+                      //console.log(geo)
+                      return makePcol(geo)
 
+
+                })
+              .attr('class', 'distos')
+              .attr('stroke','null')
+
+
+               countPollies(d)
 
 
     })
 
 
+
+
   //console.log(stageo)
 })
 
+
+function countPollies(){
+  console.log('gonna add some polly stuff')
+  console.log('repubs number:', repubs);
+  console.log('democrat num:', dems)
+
+  d3.select('.demtext')
+    .text(dems);
+
+    d3.select(".reptext").text(repubs)
+
+
+
+
+
+}
+
 function makePcol(d){
   //  console.log('making colors', d)
-  if(d.properties.party == 'Democrat'){
-    return 'blue'
+  var elesq;
+
+
+  if(d.properties.party == 'Democratic'){
+    dems += 1;
+    elesq = d3.select('.dems')
+      .append('div')
+  //    .data(pols)
+      .style('height', '20px')
+      .style('width', '20px')
+      .style('background', 'blue')
+      .style('margin', '5px 5px 5px 5px')
+
+      .attr('class', 'politsq')
+
+          return 'blue'
   }
   else if(d.properties.party == 'Republican'){
+    repubs += 1;
+    elesq = d3.select('.repubs')
+      .append('div')
+  //    .data(pols)
+      .style('height', '20px')
+      .style('width', '20px')
+      .style('background', 'red')
+      .style('margin', '5px 5px 5px 5px')
+
+      .attr('class', 'politsq')
     return 'red';
   }
   else{

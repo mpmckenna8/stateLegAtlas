@@ -1,0 +1,38 @@
+body{
+  display:flex;
+}
+
+div{
+  position:relative;
+}
+
+tots {
+
+}
+
+.parhouse {
+  display:block;
+}
+
+.dems{
+  color:blue;
+  width:45%;
+  float:left;
+  margin-left:5%;
+  height:200px;
+}
+
+.repubs{
+  color:red;
+  width:45%;
+  display:block;
+  float:left;
+}
+
+
+.politsq{
+
+  margin: 5px 5px 5px 5px;
+ float:left;
+
+}

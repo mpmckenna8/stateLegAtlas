@@ -6,9 +6,10 @@ In here we call a function stateDat([now one state]) and it doesn't really do an
 
 
 
-
 */
 var OpenStates = require('openstates');
+
+// the api key is in a file in /api and is just a string of the api key the Sunlight foundation gave me.
 var apiKey = require('./api/sunkey.js')
 var openstates = new OpenStates(apiKey);
 

@@ -1,0 +1,23 @@
+<!doctype HTML>
+<body>
+  <div class="colory">
+clllookjkjk
+  </div>
+
+<script src="../bower_components/d3/d3.js"></script>
+<script src="../bower_components/topojson/topojson.js"></script>
+<script src="../bower_components/chroma-js/chroma.js"></script>
+
+
+<script>
+
+    var coldiv = d3.select(".colory");
+
+    var scale = chroma.scale(['blue', 'red']);
+
+     console.log(scale().hex())
+     coldiv.style("background", scale(.4).hex())
+
+</script>
+</body>
+</html>
