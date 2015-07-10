@@ -58,28 +58,12 @@ openstates.metadataOverview(function(err, json) {
 
   json.forEach(function(d){
     //console.log(d)
-    //stateDat(d);
   })
 });
 
 var feature = {};
 
-function stateDat (d){
-  var chambers = d.chambers;
-  var state = d.abbreviation;
-  //console.log(state)
 
-  openstates.metadataState(state, function(err, json) {
-  if (err) throw err;
-  //console.log(json);
-});
-
-//getleginfo(state, chambers[0]);
- for (i in chambers){
-   console.log(i);
-
- }
-}
 
 var upper, lower;
 var houser;
